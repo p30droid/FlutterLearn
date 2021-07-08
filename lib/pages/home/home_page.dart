@@ -1,6 +1,6 @@
 
 import 'package:flutter/material.dart';
-import 'file:///D:/Projects/class/Flutter-225/navn/navin_learn/lib/network/http_service.dart';
+import '../../network/http_service.dart';
 import 'package:navin_learn/models/Article.dart';
 import 'package:navin_learn/models/category.dart';
 import 'package:navin_learn/pages/articleDetail/article_detail.dart';
@@ -69,74 +69,89 @@ class _HomePageState extends State<HomePage> {
 
                   future: categoryList,
                   builder: (context, snapshot) {
-                    return ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      //  shrinkWrap: true,
-                      itemCount: snapshot.data.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        if (snapshot.hasData) {
-                          return
-                            GestureDetector(
 
-                              onTap: () {
+                    if(snapshot.hasData){
 
 
-                              },
+                      return Container(
+                        height: 199,
+                        child:     ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: snapshot.data.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            if (snapshot.hasData) {
+                              return
+                                GestureDetector(
 
-                              child: Container(
-                                  height: 199,
-                                  width: 344,
+                                  onTap: () {
 
-                                  child: Card(
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(28),
-                                    ),
 
-                                    margin: EdgeInsets.all(14),
+                                  },
 
-                                    child:
+                                  child: Container(
+                                      height: 199,
+                                      width: 344,
 
-                                    Stack(
-                                        children:[
+                                      child: Card(
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(28),
+                                        ),
 
-                                          Positioned(
-                                              top: 0 , bottom: 0, left: 0, right: 0,
-                                              child:
+                                        margin: EdgeInsets.all(14),
 
-                                              Container(
-                                                width: 100.0,
-                                                height: 150.0,
-                                                decoration: BoxDecoration(
-                                                  image: DecorationImage(
-                                                      fit: BoxFit.cover, image: NetworkImage(snapshot.data[index].category_image)),
-                                                  borderRadius: BorderRadius.all(Radius.circular(18.0)),
-                                                  color: Colors.redAccent,
+                                        child:
+
+                                        Stack(
+                                            children:[
+
+                                              Positioned(
+                                                top: 0 , bottom: 0, left: 0, right: 0,
+                                                child:
+
+                                                Container(
+                                                  width: 100.0,
+                                                  height: 150.0,
+                                                  decoration: BoxDecoration(
+                                                    image: DecorationImage(
+                                                        fit: BoxFit.cover, image: NetworkImage(snapshot.data[index].category_image)),
+                                                    borderRadius: BorderRadius.all(Radius.circular(18.0)),
+                                                    color: Colors.redAccent,
+                                                  ),
                                                 ),
+
                                               ),
 
-                                          ),
-
-                                        ]
+                                            ]
 
 
-                                    ),
+                                        ),
 
 
-                                  )
+                                      )
 
-                              ),
+                                  ),
 
-                            )
-
-
-                          ;
-                        } else {
-                          return CircularProgressIndicator();
-                        }
-                      },
+                                )
 
 
-                    );
+                              ;
+                            } else {
+                              return CircularProgressIndicator();
+                            }
+                          },
+
+
+                        ) ,
+                      );
+
+
+
+                    }else if(snapshot.hasError) {
+                      return Text('${snapshot.error}');
+                    }
+                    return CircularProgressIndicator();
+
+
                   },
 
 
@@ -156,115 +171,126 @@ class _HomePageState extends State<HomePage> {
 
                     future:  latest_articles,
                     builder: (context , snapshot) {
-                      return ListView.builder(
 
-                        shrinkWrap: true,
-                        itemCount: snapshot.data.length,
-                        itemBuilder: (BuildContext context, int index){
+                      if(snapshot.hasData){
 
+                        return ListView.builder(
 
-                          if(snapshot.hasData) {
-                            return
-                              GestureDetector(
-
-                                onTap: (){
-
-                                  Navigator.push(context, MaterialPageRoute(builder:
-                                      (context)=> ArticleDetail(article : snapshot.data[index])));
-
-                                },
-
-                                child:Container(
+                          shrinkWrap: true,
+                          itemCount: snapshot.data.length,
+                          itemBuilder: (BuildContext context, int index){
 
 
-                                    child:Card(
+                            if(snapshot.hasData) {
+                              return
+                                GestureDetector(
 
-                                      margin: EdgeInsets.all(14),
+                                  onTap: (){
 
-                                      child:
+                                    Navigator.push(context, MaterialPageRoute(builder:
+                                        (context)=> ArticleDetail(article : snapshot.data[index])));
 
-                                      Container(
+                                  },
 
-                                        padding: EdgeInsets.all(14),
+                                  child:Container(
+
+
+                                      child:Card(
+
+                                        margin: EdgeInsets.all(14),
 
                                         child:
-                                        Column(
+
+                                        Container(
+
+                                          padding: EdgeInsets.all(14),
+
+                                          child:
+                                          Column(
 
 
-                                          children: [
+                                            children: [
 
-                                            Row(
+                                              Row(
 
-                                              children: [
+                                                children: [
 
-                                                Text('${snapshot.data[index].mp3_title}')
+                                                  Text('${snapshot.data[index].mp3_title}')
 
-                                              ],
+                                                ],
 
-                                            ),
+                                              ),
 
-                                            Row(
+                                              Row(
 
-                                              children: [
-
-
-                                                Image.network(snapshot.data[index].mp3_thumbnail_b , width: 100 , height: 100,)
+                                                children: [
 
 
-                                              ],
-
-                                            ),
-
-                                            Row(
-
-                                              mainAxisAlignment: MainAxisAlignment.end,
-
-                                              children: [
-
-                                                IconButton(
-
-                                                  icon: Icon(Icons.share) ,color: Colors.red ,
-
-                                                ),
+                                                  Image.network(snapshot.data[index].mp3_thumbnail_b , width: 100 , height: 100,)
 
 
-                                              ],
+                                                ],
 
-                                            )
+                                              ),
+
+                                              Row(
+
+                                                mainAxisAlignment: MainAxisAlignment.end,
+
+                                                children: [
+
+                                                  IconButton(
+
+                                                    icon: Icon(Icons.share) ,color: Colors.red ,
+
+                                                  ),
+
+
+                                                ],
+
+                                              )
 
 
 
 
-                                          ],
+                                            ],
+
+
+                                          )
+                                          ,
+
 
 
                                         )
-                                        ,
 
+                                        ,
 
 
                                       )
 
-                                      ,
+                                  ) ,
+
+                                )
 
 
-                                    )
-
-                                ) ,
-
-                              )
-
-
-                            ;
-                          }else {
-                            return CircularProgressIndicator();
-                          }
+                              ;
+                            }else {
+                              return CircularProgressIndicator();
+                            }
 
 
-                        },
+                          },
 
 
-                      );
+                        );
+                      }else if(snapshot.hasError) {
+
+                        return Text('${snapshot.error}');
+                      }
+                      return CircularProgressIndicator();
+
+
+
                     },
 
 
