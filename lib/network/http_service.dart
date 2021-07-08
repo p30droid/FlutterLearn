@@ -38,4 +38,18 @@ class HttpService {
   }
 
 
+  Future<List<Article>> getArticlesById(String id) async {
+
+    String url ='${Constants.CATEGORY_ARTICLES}${id}';
+
+    Response response = await get(Uri.parse(url));
+    List<Article> articleList =  JsonConvertor().articles(response.body);
+
+    return articleList;
+
+
+  }
+
+
+
 }

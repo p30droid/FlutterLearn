@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:navin_learn/models/Article.dart';
+import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 
 class ArticleDetail extends StatefulWidget {
 
@@ -24,13 +25,19 @@ class _ArticleDetailState extends State<ArticleDetail> {
   Widget build(BuildContext context) {
     return Scaffold(
 
-      body: Column(
+      appBar: AppBar(
 
-        children: [
 
-          Text(widget.article.mp3_title)
+        title: Text('${widget.article.mp3_title}'),
+      ),
 
-        ],
+
+      body: SingleChildScrollView(
+
+        child:
+
+         HtmlWidget(widget.article.mp3_description)
+        ,
 
 
       ),
